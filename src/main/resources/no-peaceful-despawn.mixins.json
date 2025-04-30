@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "com.skycatdev.nopeacefuldespawn.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"AllowInPeacefulMixin",
+		"MobEntityMixin",
+		"WitherEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
