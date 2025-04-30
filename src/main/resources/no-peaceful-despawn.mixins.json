@@ -5,6 +5,7 @@
 	"mixins": [
 		"AllowInPeacefulMixin",
 		"MobEntityMixin",
+		"MobSpawnerLogicMixin",
 		"WitherEntityMixin"
 	],
 	"injectors": {
