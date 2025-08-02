@@ -9,6 +9,6 @@ public class NPaaceConfig {
     public static GameRules.Key<GameRules.BooleanRule> PEACEFUL_SPAWNS;
 
     public static void init() {
-        PEACEFUL_SPAWNS =             GameRuleRegistry.register("do_peaceful_spawns", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(false));
+        PEACEFUL_SPAWNS =             GameRuleRegistry.register("doPeacefulMobSpawns", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(false));
     }
 }
