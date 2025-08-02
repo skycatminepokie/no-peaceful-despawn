@@ -4,6 +4,8 @@
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"AllowInPeacefulMixin",
+		"AllowInPeacefulMixinGhostBusters",
+		"AllowInPeacefulMixinSlimer",
 		"HostileEntityMixin",
 		"MobEntityMixin",
 		"MobSpawnerLogicMixin",
