@@ -5,6 +5,7 @@
 	"mixins": [
 		"AllowInPeacefulMixin",
 		"AllowInPeacefulMixinGhostBusters",
+		"AllowInPeacefulMixinSilverFishFix",
 		"AllowInPeacefulMixinSlimer",
 		"HostileEntityMixin",
 		"MobEntityMixin",
