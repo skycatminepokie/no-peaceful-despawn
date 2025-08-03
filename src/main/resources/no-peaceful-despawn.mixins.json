@@ -1,19 +1,19 @@
 {
-	"required": true,
-	"package": "com.skycatdev.nopeacefuldespawn.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"AllowInPeacefulMixin",
-		"AllowInPeacefulMixinGhostBusters",
-		"AllowInPeacefulMixinSilverFishFix",
-		"AllowInPeacefulMixinSlimer",
-		"HostileEntityMixin",
-		"MobEntityMixin",
-		"MobSpawnerLogicMixin",
-		"SplashExtraMixin",
-		"WitherEntityMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "com.skycatdev.nopeacefuldespawn.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AllowInPeacefulMixin",
+    "AllowInPeacefulMixinGhostBusters",
+    "AllowInPeacefulMixinSilverFishFix",
+    "AllowInPeacefulMixinSlimer",
+    "HostileEntityMixin",
+    "MobEntityMixin",
+    "MobSpawnerLogicMixin",
+    "SplashExtraMixin",
+    "WitherEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }

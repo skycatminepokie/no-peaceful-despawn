@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.Objects;
 
-import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNS;
+import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNERS;
 import static net.minecraft.entity.mob.HostileEntity.isSpawnDark;
 import static net.minecraft.entity.mob.MobEntity.canMobSpawn;
 
@@ -25,7 +25,7 @@ public abstract class AllowInPeacefulMixin {
 
     @WrapMethod(method = "canSpawnInDark")
     private static boolean noPeacefulDespawn$dontDisallowDarkSpawns(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random, Operation<Boolean> original) {
-        if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNS)){
+        if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNERS)){
             return (SpawnReason.isTrialSpawner(spawnReason) || isSpawnDark(world, pos, random)) && canMobSpawn(type, world, spawnReason, pos, random);
         }else{
             return false;

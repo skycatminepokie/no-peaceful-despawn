@@ -6,9 +6,9 @@ import net.minecraft.world.GameRules;
 
 public class NPaaceConfig {
     // Create and register a boolean game rule with the name "shouldPigsFly" which is true by default.
-    public static GameRules.Key<GameRules.BooleanRule> PEACEFUL_SPAWNS;
+    public static GameRules.Key<GameRules.BooleanRule> PEACEFUL_SPAWNERS;
 
     public static void init() {
-        PEACEFUL_SPAWNS =             GameRuleRegistry.register("doPeacefulMobSpawns", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(false));
+        PEACEFUL_SPAWNERS =             GameRuleRegistry.register("doPeacefulMobSpawners", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(false));
     }
 }

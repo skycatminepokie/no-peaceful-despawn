@@ -1,36 +1,41 @@
 package com.skycatdev.nopeacefuldespawn.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.spawner.MobSpawnerLogic;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.WorldView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Objects;
 
-import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNS;
+import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNERS;
 
 @Mixin(MobSpawnerLogic.class)
 public class MobSpawnerLogicMixin {
     @WrapOperation(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;getDifficulty()Lnet/minecraft/world/Difficulty;"))
     private Difficulty noPeacefulDespawn$allowSpawners(ServerWorld world, Operation<Difficulty> original) {
-        if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNS)){
-            return Difficulty.NORMAL;
+        if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNERS)){
+            return Difficulty.EASY;
         }else{
             return Difficulty.PEACEFUL;
         }
     }
 
-    @WrapOperation(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityType;getSpawnGroup()Lnet/minecraft/entity/SpawnGroup;"))
-    private SpawnGroup noPeacefulDespawn$allowSpawners2(EntityType instance, Operation<SpawnGroup> original) {
-        if (instance.getSpawnGroup() == SpawnGroup.MONSTER){
-            return SpawnGroup.AMBIENT;
+    //Extra check for monsters like phantoms that do not follow rules of spawning
+    @WrapOperation(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;canSpawn(Lnet/minecraft/world/WorldView;)Z"))
+    private boolean noPeacefulDespawn$respectGamerule(MobEntity instance, WorldView world, Operation<Boolean> original) {
+        if (!instance.getWorld().getServer().getGameRules().getBoolean(PEACEFUL_SPAWNERS) && instance.getWorld().getDifficulty() == Difficulty.PEACEFUL){
+            if (instance instanceof Monster){
+                return false;
+            }
         }
-        return instance.getSpawnGroup();
+
+        return true;
     }
+
 }

@@ -10,13 +10,13 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Objects;
 
-import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNS;
+import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNERS;
 
 @Mixin(HostileEntity.class)
 public abstract class HostileEntityMixin {
     @WrapOperation(method = "canSpawnIgnoreLightLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/WorldAccess;getDifficulty()Lnet/minecraft/world/Difficulty;"))
     private static Difficulty noPeacefulDespawn$skipPeacefulCheck(WorldAccess world, Operation<Difficulty> original) {
-        if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNS)) {
+        if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNERS)) {
             return Difficulty.EASY;
         }else{
             return Difficulty.PEACEFUL;

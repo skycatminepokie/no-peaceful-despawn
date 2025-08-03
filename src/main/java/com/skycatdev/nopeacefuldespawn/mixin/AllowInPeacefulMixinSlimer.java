@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.Objects;
 
-import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNS;
+import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNERS;
 import static net.minecraft.entity.mob.MobEntity.canMobSpawn;
 
 @Mixin({SlimeEntity.class})
@@ -29,7 +28,7 @@ public abstract class AllowInPeacefulMixinSlimer {
 
     @WrapMethod(method = "canSpawn")
     private static boolean noPeacefulDespawn$dontDisallowSpawns(EntityType<SlimeEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random, Operation<Boolean> original) {
-        if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNS)) {
+        if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNERS)) {
             if (SpawnReason.isAnySpawner(spawnReason)) {
                 return canMobSpawn(type, world, spawnReason, pos, random);
             }
