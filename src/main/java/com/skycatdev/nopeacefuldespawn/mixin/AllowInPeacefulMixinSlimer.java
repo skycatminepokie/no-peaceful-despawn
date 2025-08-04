@@ -21,11 +21,6 @@ import static net.minecraft.entity.mob.MobEntity.canMobSpawn;
 
 @Mixin({SlimeEntity.class})
 public abstract class AllowInPeacefulMixinSlimer {
-    @WrapMethod(method = "isDisallowedInPeaceful")
-    private boolean noPeacefulDespawn$dontDisallowPeaceful(Operation<Boolean> original) {
-        return false;
-    }
-
     @WrapMethod(method = "canSpawn")
     private static boolean noPeacefulDespawn$dontDisallowSpawns(EntityType<SlimeEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random, Operation<Boolean> original) {
         if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNERS)) {

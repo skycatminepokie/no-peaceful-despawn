@@ -17,11 +17,6 @@ import static net.minecraft.entity.mob.MobEntity.canMobSpawn;
 
 @Mixin({GhastEntity.class} )
 public abstract class AllowInPeacefulMixinGhostBusters {
-    @WrapMethod(method = "isDisallowedInPeaceful")
-    private boolean noPeacefulDespawn$dontDisallowPeaceful(Operation<Boolean> original) {
-        return false;
-    }
-
     @WrapMethod(method = "canSpawn")
     private static boolean noPeacefulDespawn$dontDisallowSpawns(EntityType<GhastEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random, Operation<Boolean> original) {
         if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNERS)){

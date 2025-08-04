@@ -13,9 +13,4 @@ public abstract class MobEntityMixin {
     private boolean no_peaceful_despawn$allowAllInPeaceful(MobEntity instance, Operation<Boolean> original) {
         return false;
     }
-
-    @WrapMethod(method = "isDisallowedInPeaceful")
-    private boolean noPeacefulDespawn$dontDisallowPeaceful(Operation<Boolean> original) {
-        return false;
-    }
 }

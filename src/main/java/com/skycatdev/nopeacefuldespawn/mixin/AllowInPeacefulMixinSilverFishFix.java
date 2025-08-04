@@ -19,6 +19,8 @@ import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNERS;
 
 @Mixin(InfestedBlock.class)
 public abstract class AllowInPeacefulMixinSilverFishFix {
+
+    //possible alternative is to wrap world.spawnEntity(silverfishEntity);
     @Inject(method = "onStacksDropped", at = @At("HEAD"), cancellable = true)
     protected void noPeacefulDespawn$onStacksDroppedPeaceRules(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience, CallbackInfo ci) {
         if (world.getDifficulty() == Difficulty.PEACEFUL && (!Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNERS))) {

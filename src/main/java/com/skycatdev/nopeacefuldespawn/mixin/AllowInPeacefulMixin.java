@@ -18,11 +18,8 @@ import static net.minecraft.entity.mob.MobEntity.canMobSpawn;
 
 @Mixin(HostileEntity.class)
 public abstract class AllowInPeacefulMixin {
-    @WrapMethod(method = "isDisallowedInPeaceful")
-    private boolean noPeacefulDespawn$dontDisallowPeaceful(Operation<Boolean> original) {
-        return false;
-    }
 
+    //Required for spawners
     @WrapMethod(method = "canSpawnInDark")
     private static boolean noPeacefulDespawn$dontDisallowDarkSpawns(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random, Operation<Boolean> original) {
         if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNERS)){
@@ -31,6 +28,5 @@ public abstract class AllowInPeacefulMixin {
             return false;
         }
     }
-
 
 }

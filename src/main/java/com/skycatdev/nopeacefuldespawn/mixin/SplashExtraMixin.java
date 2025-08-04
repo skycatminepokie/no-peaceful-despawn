@@ -28,7 +28,7 @@ public class SplashExtraMixin {
         instance.add("UWA much friends?");
         instance.add("Friendly creatures brought to you by SkyCatMinePokie");
         instance.add("Friendly creatures brought to you by ActuallyTheOwner");
-        instance.add("Friendly creatures brought to you by....? [[MINECRAFT! Please add peaceful monsters!]]");
+        instance.add("Friendly creatures brought to you by....? [[MINECRAFT! Please add peaceful monster spawners!]]");
         instance.add(instance.size() + " MANY SPLASHES!");
         return splashes;
     }
