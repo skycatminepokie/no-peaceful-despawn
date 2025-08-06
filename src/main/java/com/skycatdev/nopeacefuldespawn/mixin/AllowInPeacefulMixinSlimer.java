@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.Objects;
 
-import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNERS;
+import static com.skycatdev.nopeacefuldespawn.NoPeacefulDespawnConfig.PEACEFUL_SPAWNERS;
 import static net.minecraft.entity.mob.MobEntity.canMobSpawn;
 
 @Mixin({SlimeEntity.class})

@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Objects;
 
-import static com.skycatdev.nopeacefuldespawn.NPaaceConfig.PEACEFUL_SPAWNERS;
+import static com.skycatdev.nopeacefuldespawn.NoPeacefulDespawnConfig.PEACEFUL_SPAWNERS;
 
 @Mixin(MobSpawnerLogic.class)
 public class MobSpawnerLogicMixin {

@@ -11,6 +11,6 @@ public class NoPeacefulDespawn implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		NPaaceConfig.init();
+		NoPeacefulDespawnConfig.init();
 	}
 }
