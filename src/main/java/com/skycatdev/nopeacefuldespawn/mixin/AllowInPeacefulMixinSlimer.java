@@ -1,47 +1,27 @@
 package com.skycatdev.nopeacefuldespawn.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.mob.SlimeEntity;
-import net.minecraft.registry.tag.BiomeTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.random.ChunkRandom;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.WorldAccess;
 import org.spongepowered.asm.mixin.Mixin;
-
-import java.util.Objects;
+import org.spongepowered.asm.mixin.injection.At;
 
 import static com.skycatdev.nopeacefuldespawn.NoPeacefulDespawnConfig.PEACEFUL_SPAWNERS;
-import static net.minecraft.entity.mob.MobEntity.canMobSpawn;
 
 @Mixin({SlimeEntity.class})
 public abstract class AllowInPeacefulMixinSlimer {
-    @WrapMethod(method = "canSpawn")
-    private static boolean noPeacefulDespawn$dontDisallowSpawns(EntityType<SlimeEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random, Operation<Boolean> original) {
-        if (Objects.requireNonNull(world.getServer()).getGameRules().getBoolean(PEACEFUL_SPAWNERS)) {
-            if (SpawnReason.isAnySpawner(spawnReason)) {
-                return canMobSpawn(type, world, spawnReason, pos, random);
-            }
-
-            if (world.getBiome(pos).isIn(BiomeTags.ALLOWS_SURFACE_SLIME_SPAWNS) && pos.getY() > 50 && pos.getY() < 70 && random.nextFloat() < 0.5F && random.nextFloat() < world.getMoonSize() && world.getLightLevel(pos) <= random.nextInt(8)) {
-                return canMobSpawn(type, world, spawnReason, pos, random);
-            }
-
-            if (!(world instanceof StructureWorldAccess)) {
-                return false;
-            }
-
-            ChunkPos chunkPos = new ChunkPos(pos);
-            boolean bl = ChunkRandom.getSlimeRandom(chunkPos.x, chunkPos.z, ((StructureWorldAccess) world).getSeed(), 987234911L).nextInt(10) == 0;
-            if (random.nextInt(10) == 0 && bl && pos.getY() < 40) {
-                return canMobSpawn(type, world, spawnReason, pos, random);
+    @WrapOperation(method = "canSpawn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/WorldAccess;getDifficulty()Lnet/minecraft/world/Difficulty;"))
+    private static Difficulty noPeacefulDespawn$dontDisallowSpawns(WorldAccess world, Operation<Difficulty> original) {
+        Difficulty difficulty = original.call(world);
+        if (difficulty == Difficulty.PEACEFUL) { // If it's not peaceful, no need to do other checks
+            MinecraftServer server = world.getServer();
+            if (server != null && server.getGameRules().get(PEACEFUL_SPAWNERS).get()) { // If it should spawn, let it
+                return Difficulty.EASY;
             }
         }
-        return false;
+        return difficulty;
     }
 }
