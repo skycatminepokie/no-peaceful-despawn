@@ -12,7 +12,7 @@ import java.util.List;
 
 @Mixin(SplashTextResourceSupplier.class)
 
-public class SplashExtraMixin {
+public abstract class SplashExtraMixin {
     @WrapOperation(
                 method = "apply(Ljava/util/List;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V",
                 at = @At
