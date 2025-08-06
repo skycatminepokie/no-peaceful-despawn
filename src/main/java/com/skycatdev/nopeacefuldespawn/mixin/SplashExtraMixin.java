@@ -1,56 +1,35 @@
 package com.skycatdev.nopeacefuldespawn.mixin;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.SplashTextRenderer;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.resource.SplashTextResourceSupplier;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.Random;
+import java.util.Collection;
+import java.util.List;
+
 
 @Mixin(SplashTextResourceSupplier.class)
 
-public class SplashExtraMixin {
-
-    public final SplashTextRenderer SLIME_FRIENDS = new SplashTextRenderer("Baby Slimes are your friends!");
-    public final SplashTextRenderer Z_PIG = new SplashTextRenderer("Peaceful Zombified Piglins!");
-
-    public Identifier splashes = Identifier.ofVanilla("texts/splashes.txt");
-    ResourceManager manager = MinecraftClient.getInstance().getResourceManager();
-
-    @Inject(method = "get", at = @At("HEAD"), cancellable = true)
-    public void onGet(CallbackInfoReturnable<SplashTextRenderer> cir) throws IOException {
-
-        //Note for updaters, remember to add to this list
-        SplashTextRenderer[] Added_Entries = {
-            SLIME_FRIENDS,
-            Z_PIG,
-        };
-
-        Random random = new Random();
-
-        int lineCount = 0;
-        try (BufferedReader reader = new BufferedReader(manager.getResourceOrThrow(splashes).getReader())) {
-            while (reader.readLine() != null) {
-                lineCount++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        int randomIndex = random.nextInt(lineCount + Added_Entries.length);
-        if (randomIndex >= lineCount) {
-            int newSplash = random.nextInt(Added_Entries.length);
-            cir.setReturnValue(Added_Entries[newSplash]);
-        }
-
-        //For debug
-        //cir.setReturnValue(new SplashTextRenderer((lineCount + added_string_count) + " with chance of 1 /  " + (randomIndex)));
+public abstract class SplashExtraMixin {
+    @WrapOperation(
+                method = "apply(Ljava/util/List;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V",
+                at = @At
+                        (
+                                value = "INVOKE",
+                                target = "Ljava/util/List;addAll(Ljava/util/Collection;)Z"
+                        )
+        )
+   private boolean appendList(List<String> instance, Collection<String> collection, Operation<Boolean> original) {
+        var splashes = original.call(instance, collection);
+        instance.add("BABY SLIMES are your friends!");
+        instance.add("Peaceful ZOMBIFIED PIGLINS!");
+        instance.add("UWA much friends?");
+        instance.add("Friendly creatures brought to you by skycatminepokie");
+        instance.add("Friendly creatures brought to you by ActuallyTheOwner");
+        instance.add("Friendly creatures brought to you by....? [[MINECRAFT! Please add peaceful monster spawners!]]");
+        instance.add(instance.size() + " MANY SPLASHES!");
+        return splashes;
     }
 }
