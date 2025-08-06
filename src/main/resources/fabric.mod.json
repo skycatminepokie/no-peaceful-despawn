@@ -5,7 +5,8 @@
 	"name": "No Peaceful Despawn",
 	"description": "Keeps monsters in Peaceful Mode with gamerule tweaks.",
 	"authors": [
-		"skycatminepokie, actuallytheowner"
+		"actuallytheowner",
+		"skycatminepokie"
 	],
 	"contact": {
 		"sources": "https://github.com/skycatminepokie/no-peaceful-despawn"
