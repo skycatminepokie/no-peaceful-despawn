@@ -11,8 +11,6 @@ import net.minecraft.world.WorldView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.Objects;
-
 import static com.skycatdev.nopeacefuldespawn.NoPeacefulDespawnConfig.PEACEFUL_SPAWNERS;
 
 @Mixin(MobSpawnerLogic.class)
@@ -27,7 +25,11 @@ public abstract class MobSpawnerLogicMixin {
         return difficulty;
     }
 
-    //Extra check for monsters like phantoms that do not follow rules of spawning
+    //In PhantomEntity.class it seems isDisallowedInPeaceful is typed again
+    //This is in spite of already inheriting isDisallowedInPeaceful from MobEntity.class
+    //It's more simple to wrap with this function below for people who do mod this game.
+    //Mojang should remove the extra isDisallowedInPeaceful to save function calls.
+    //If for whatever reason other community mods do not follow rules of spawning, we keep this here.
     @WrapOperation(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;canSpawn(Lnet/minecraft/world/WorldView;)Z"))
     private boolean noPeacefulDespawn$respectGamerule(MobEntity instance, WorldView world, Operation<Boolean> original) {
         if (instance.getWorld().getDifficulty() == Difficulty.PEACEFUL) {

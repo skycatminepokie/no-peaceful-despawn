@@ -6,6 +6,7 @@
     "AllowInPeacefulMixin",
     "AllowInPeacefulMixinGhostBusters",
     "AllowInPeacefulMixinSlimer",
+    "AllowInPeacefulMixinSpicy",
     "HostileEntityMixin",
     "MobEntityMixin",
     "MobSpawnerLogicMixin",
