@@ -11,6 +11,7 @@ public class NoPeacefulDespawn implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+        LOGGER.info("No Peaceful Despawn has been initialized!");
 		NoPeacefulDespawnConfig.init();
 	}
 }
